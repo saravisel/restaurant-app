@@ -118,6 +118,12 @@ patch '/api/restaurants/:id/disable' do
   json result
 end
 
+# Top rated restaurants
+get '/api/restaurants/top/:limit' do
+  limit = params[:limit].to_i
+  result = JSON.parse(RestaurantsController.top_rated(limit))
+  json result
+end
 
 
 # Error handling
