@@ -78,6 +78,16 @@ curl -X PUT http://localhost:4567/api/restaurants/{id} \
 curl http://localhost:4567/api/restaurants/search/Italian
 ```
 
+### Delete Restaurant
+```bash
+curl -X DELETE http://localhost:4567/api/restaurants/{id}
+```
+
+### Soft Delete Restaurant
+```bash
+curl -X PATCH http://localhost:4567/api/restaurants/{id}/disable
+```
+
 ## Project Structure
 
 ```
