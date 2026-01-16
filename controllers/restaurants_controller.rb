@@ -138,6 +138,14 @@ class RestaurantsController
       doc ? serialize(doc) : {}
     end
 
+    def disabled
+      data = RESTAURANTS_COLLECTION
+               .find(deleted: true)
+               .to_a
+
+      data.map { |r| serialize(r) }
+    end
+
     private
 
     def find_by_id(id)

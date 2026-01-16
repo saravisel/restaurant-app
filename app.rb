@@ -108,6 +108,10 @@ delete '/api/restaurants/:id' do
   json result
 end
 
+get '/api/restaurants/disabled' do
+  json RestaurantsController.disabled
+end
+
 # Error handling
 error do
   status 500

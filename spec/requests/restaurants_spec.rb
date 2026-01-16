@@ -297,4 +297,21 @@ RSpec.describe 'Restaurants API', type: :request do
       expect(body['name']).to eq('Random Cafe')
     end
   end
+
+  # -------------------------
+  # DISABLED
+  # -------------------------
+  describe 'GET /api/restaurants/disabled' do
+    it 'returns soft deleted restaurants' do
+      restaurant = create_restaurant
+
+      patch "/api/restaurants/#{restaurant['id']}/disable"
+
+      get '/api/restaurants/disabled'
+
+      body = JSON.parse(last_response.body)
+      expect(body.length).to eq(1)
+      expect(body.first['id']).to eq(restaurant['id'])
+    end
+  end
 end
