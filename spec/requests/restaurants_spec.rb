@@ -314,4 +314,36 @@ RSpec.describe 'Restaurants API', type: :request do
       expect(body.first['id']).to eq(restaurant['id'])
     end
   end
+
+  # ----------------------------------
+  # nearby restaurants within radius
+  # ----------------------------------
+
+  describe 'GET /api/restaurants/nearby' do
+    it 'returns nearby restaurants within radius' do
+      create_restaurant(
+        name: 'Nearby Cafe',
+        city: 'Bangalore',
+        cuisine: 'Indian',
+        rating: 4.5,
+        latitude: 12.9716,
+        longitude: 77.5946
+      )
+
+      create_restaurant(
+        name: 'Far Cafe',
+        city: 'Mysore',
+        cuisine: 'Indian',
+        rating: 4.0,
+        latitude: 12.2958,
+        longitude: 76.6394
+      )
+
+      get '/api/restaurants/nearby?lat=12.9716&lng=77.5946&radius=5'
+
+      body = JSON.parse(last_response.body)
+      expect(body.length).to eq(1)
+      expect(body.first['name']).to eq('Nearby Cafe')
+    end
+  end
 end

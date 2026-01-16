@@ -74,6 +74,19 @@ post '/api/restaurants/bulk' do
   json RestaurantsController.bulk_create(list)
 end
 
+get '/api/restaurants/nearby' do
+  lat = params[:lat]
+  lng = params[:lng]
+  radius = params[:radius] || 5
+
+  unless lat && lng
+    status 400
+    return json error: 'lat and lng are required'
+  end
+
+  json RestaurantsController.nearby(lat, lng, radius)
+end
+
 # ------------------------
 # MEMBER ROUTES (LAST)
 # ------------------------
