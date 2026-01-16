@@ -12,4 +12,7 @@ group :development do
   gem 'pry', '~> 0.14'
 end
 
-
+group :development, :test do
+  gem 'rspec', '~> 3.12'
+  gem 'rack-test', '~> 2.1'
+end
