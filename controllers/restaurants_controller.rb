@@ -146,6 +146,29 @@ class RestaurantsController
       data.map { |r| serialize(r) }
     end
 
+    def nearby(lat, lng, radius)
+      lat = lat.to_f
+      lng = lng.to_f
+      radius = radius.to_f
+
+      results = RESTAURANTS_COLLECTION
+                  .find(deleted: { '$ne' => true })
+                  .to_a
+                  .select do |r|
+                    next false unless r[:latitude] && r[:longitude]
+
+                    distance_km(
+                      lat,
+                      lng,
+                      r[:latitude],
+                      r[:longitude]
+                    ) <= radius
+                  end
+
+      results.map { |r| serialize(r) }
+    end
+
+
     private
 
     def find_by_id(id)
@@ -157,6 +180,24 @@ class RestaurantsController
     def serialize(doc)
       doc.merge(id: doc[:_id].to_s).tap { |d| d.delete(:_id) }
     end
+
+    def distance_km(lat1, lon1, lat2, lon2)
+      rad = Math::PI / 180
+      r = 6371 # Earth radius in km
+
+      dlat = (lat2 - lat1) * rad
+      dlon = (lon2 - lon1) * rad
+
+      a =
+        Math.sin(dlat / 2)**2 +
+        Math.cos(lat1 * rad) *
+        Math.cos(lat2 * rad) *
+        Math.sin(dlon / 2)**2
+
+      c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+      r * c
+    end
+
 
   end
 end
