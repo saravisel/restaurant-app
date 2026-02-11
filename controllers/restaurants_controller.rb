@@ -21,6 +21,8 @@ class RestaurantsController
         city: params['city'],
         cuisine: params['cuisine'],
         rating: params['rating'].to_f,
+        latitude: params['latitude']&.to_f,
+        longitude: params['longitude']&.to_f,
         deleted: false,
         created_at: Time.now
       }
@@ -167,6 +169,20 @@ class RestaurantsController
 
       results.map { |r| serialize(r) }
     end
+
+    def recent(days)
+      threshold = Time.now - (days * 24 * 60 * 60)
+
+      data = RESTAURANTS_COLLECTION
+                .find({
+                  created_at: { '$gte' => threshold },
+                  deleted: { '$ne' => true }
+                })
+                .to_a
+
+      data.map { |r| serialize(r) }
+    end
+
 
 
     private

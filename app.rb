@@ -87,9 +87,17 @@ get '/api/restaurants/nearby' do
   json RestaurantsController.nearby(lat, lng, radius)
 end
 
+get '/api/restaurants/recent/:days' do
+  json RestaurantsController.recent(params[:days].to_i)
+end
+
 # ------------------------
 # MEMBER ROUTES (LAST)
 # ------------------------
+
+get '/api/restaurants/disabled' do
+  json RestaurantsController.disabled
+end
 
 get '/api/restaurants/:id' do
   result = RestaurantsController.show(params[:id])
@@ -119,10 +127,6 @@ delete '/api/restaurants/:id' do
   result = RestaurantsController.destroy(params[:id])
   status 404 if result[:error]
   json result
-end
-
-get '/api/restaurants/disabled' do
-  json RestaurantsController.disabled
 end
 
 # Error handling

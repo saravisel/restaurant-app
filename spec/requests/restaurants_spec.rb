@@ -346,4 +346,15 @@ RSpec.describe 'Restaurants API', type: :request do
       expect(body.first['name']).to eq('Nearby Cafe')
     end
   end
+
+  describe 'GET /api/restaurants/recent/:days' do
+    it 'returns restaurants created within X days' do
+      create_restaurant # created now
+
+      get '/api/restaurants/recent/1'
+
+      body = JSON.parse(last_response.body)
+      expect(body.length).to eq(1)
+    end
+  end
 end
