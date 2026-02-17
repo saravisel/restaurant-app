@@ -357,4 +357,17 @@ RSpec.describe 'Restaurants API', type: :request do
       expect(body.length).to eq(1)
     end
   end
+
+  describe 'GET /api/restaurants/cuisines/popular' do
+    it 'returns most common cuisine' do
+      create_restaurant(cuisine: 'Indian')
+      create_restaurant(cuisine: 'Indian')
+      create_restaurant(cuisine: 'Italian')
+
+      get '/api/restaurants/cuisines/popular'
+
+      body = JSON.parse(last_response.body)
+      expect(body['popular_cuisine']).to eq('Indian')
+    end
+  end
 end
