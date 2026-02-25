@@ -183,6 +183,19 @@ class RestaurantsController
       data.map { |r| serialize(r) }
     end
 
+    def popular_cuisine
+      cuisines = RESTAURANTS_COLLECTION
+                   .find(deleted: { '$ne' => true })
+                   .map { |r| r[:cuisine] }
+
+      return { popular_cuisine: nil } if cuisines.empty?
+
+      freq = cuisines.tally
+      popular = freq.max_by { |k, v| v }.first
+
+      { popular_cuisine: popular }
+    end
+
 
 
     private

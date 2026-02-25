@@ -91,6 +91,10 @@ get '/api/restaurants/recent/:days' do
   json RestaurantsController.recent(params[:days].to_i)
 end
 
+get '/api/restaurants/cuisines/popular' do
+  json RestaurantsController.popular_cuisine
+end
+
 # ------------------------
 # MEMBER ROUTES (LAST)
 # ------------------------
