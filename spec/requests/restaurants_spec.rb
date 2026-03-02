@@ -370,4 +370,15 @@ RSpec.describe 'Restaurants API', type: :request do
       expect(body['popular_cuisine']).to eq('Indian')
     end
   end
+
+  describe "Daily Specials" do
+    it "returns 5 random restaurants" do
+      10.times { create_restaurant }
+
+      get "/api/restaurants/daily_specials"
+      body = JSON.parse(last_response.body)
+
+      expect(body.length).to eq(5)
+    end
+  end
 end
