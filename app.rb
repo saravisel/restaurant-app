@@ -95,6 +95,10 @@ get '/api/restaurants/cuisines/popular' do
   json RestaurantsController.popular_cuisine
 end
 
+get '/api/restaurants/daily_specials' do
+  json RestaurantsController.daily_specials
+end
+
 # ------------------------
 # MEMBER ROUTES (LAST)
 # ------------------------

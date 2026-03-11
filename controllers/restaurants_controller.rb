@@ -196,6 +196,12 @@ class RestaurantsController
       { popular_cuisine: popular }
     end
 
+    def daily_specials
+      RESTAURANTS_COLLECTION
+        .aggregate([{ '$sample' => { size: 5 } }])
+        .map { |r| serialize(r) }
+    end
+
 
 
     private
