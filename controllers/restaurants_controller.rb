@@ -201,7 +201,10 @@ class RestaurantsController
         .aggregate([{ '$sample' => { size: 5 } }])
         .map { |r| serialize(r) }
     end
-
+    
+    def count
+      RESTAURANTS_COLLECTION.count_documents(deleted: { '$ne' => true })
+    end
 
 
     private
