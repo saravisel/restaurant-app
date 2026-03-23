@@ -381,4 +381,15 @@ RSpec.describe 'Restaurants API', type: :request do
       expect(body.length).to eq(5)
     end
   end
+
+  describe 'GET /api/restaurants/count' do
+    it 'returns count of active restaurants' do
+      3.times { create_restaurant }
+
+      get '/api/restaurants/count'
+
+      body = JSON.parse(last_response.body)
+      expect(body['count']).to eq(3)
+    end
+  end
 end

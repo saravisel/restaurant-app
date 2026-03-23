@@ -69,6 +69,10 @@ get '/api/restaurants/random' do
   json RestaurantsController.random
 end
 
+get '/api/restaurants/count' do
+  json count: RestaurantsController.count
+end
+
 post '/api/restaurants/bulk' do
   list = params['restaurants'] || []
   json RestaurantsController.bulk_create(list)
