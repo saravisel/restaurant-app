@@ -99,6 +99,10 @@ get '/api/restaurants/daily_specials' do
   json RestaurantsController.daily_specials
 end
 
+get '/api/restaurants/highest-rated' do
+  json RestaurantsController.highest_rated
+end
+
 # ------------------------
 # MEMBER ROUTES (LAST)
 # ------------------------

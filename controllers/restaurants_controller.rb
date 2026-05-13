@@ -202,6 +202,14 @@ class RestaurantsController
         .map { |r| serialize(r) }
     end
 
+    def highest_rated
+      doc = RESTAURANTS_COLLECTION
+               .find(deleted: { '$ne' => true })
+               .sort(rating: -1)
+               .first
+
+      doc ? serialize(doc) : {}
+    end
 
 
     private
