@@ -381,4 +381,16 @@ RSpec.describe 'Restaurants API', type: :request do
       expect(body.length).to eq(5)
     end
   end
+
+  describe 'GET /api/restaurants/highest-rated' do
+    it 'returns the restaurant with highest rating' do
+      create_restaurant(rating: 3.0)
+      create_restaurant(rating: 5.0)
+
+      get '/api/restaurants/highest-rated'
+
+      body = JSON.parse(last_response.body)
+      expect(body['rating']).to eq(5.0)
+    end
+  end
 end
